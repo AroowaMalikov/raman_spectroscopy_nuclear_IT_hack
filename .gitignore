@@ -1,4 +1,17 @@
-converted_endo
 endo
 exo
 control
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+wheels/
+*.egg-info
+
+# Project files
+.venv
+.idea/
+.DS_Store
+.env
+.vscode/
