@@ -1,6 +1,7 @@
 endo
 exo
 control
+temp_chunks
 
 # Python-generated files
 __pycache__/
