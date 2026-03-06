@@ -2,34 +2,29 @@ import pandas as pd
 import os
 from parser import parsing_data
 
-# Структура директорий
 dirs_2 = {
     'control': ['mk1', 'mk2a', 'mk2b', 'mk3'],
     'endo': ['mend1', 'mend2a', 'mend2b', 'mend3'],
     'exo': ['mexo1', 'mexo2a', 'mexo2b', 'mexo3']
 }
 
-# Создаем пустой список для хранения кусков данных (chunks)
-all_dataframes = []
+os.makedirs('temp_chunks', exist_ok=True)
+chunk_files = []
 
-# Проходим по словарю: dir_1 - это ключ (control/endo/exo), sub_dirs - список папок
 for dir_1, sub_dirs in dirs_2.items():
     for dir_2 in sub_dirs:
         print(f"Обрабатываю: {dir_1} / {dir_2}")
-        
-        # Вызываем ваш парсер для конкретной пары папок
+
         df_chunk = parsing_data(dir_1, dir_2)
-        
-        # Добавляем результат в список
-        all_dataframes.append(df_chunk)
 
-# Объединяем все куски в один большой DataFrame
-# ignore_index=True нужен, чтобы пронумеровать строки заново (0, 1, 2...), а не дублировать индексы
-df = pd.concat(all_dataframes, ignore_index=True)
+        filename = f'temp_chunks/{dir_1}_{dir_2}.csv'
+        df_chunk.to_csv(filename, index=False)
+        chunk_files.append(filename)
 
-# Проверяем результат
-print("\nГотово! Первые 5 строк:")
-print(df.head())
+        del df_chunk
 
-# (Опционально) Можно сохранить результат в csv, чтобы не парсить каждый раз заново
-# df.to_csv('full_dataset.csv', index=False)
+df_list = [pd.read_csv(f) for f in chunk_files]
+df = pd.concat(df_list, ignore_index=True)
+
+df.to_csv('full_dataset.csv', index=False)
+print("0")
