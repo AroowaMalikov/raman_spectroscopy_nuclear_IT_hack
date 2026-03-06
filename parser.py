@@ -1,8 +1,11 @@
+import pandas as pd
+import os
+
+
 def parsing_data(dir_1, dir_2):
     names_columns = ['X', 'Y', 'Wave', 'Intensity', 'cat', 'feature_1', 'feature_2', 'feature_3',  'side']
     data = pd.DataFrame(columns=names_columns)
     names = os.listdir(f'data/{dir_1}/{dir_2}')
-    number = 1
 
     for dir_3 in names[:]:
         print(dir_3)
