@@ -9,12 +9,15 @@ dirs_2 = {
     'exo': ['mexo1', 'mexo2a', 'mexo2b', 'mexo3']
 }
 
-def visualize_file(filename):
+
+
+def visualize_file(filename, save_path=None):
     """
     Визуализирует данные из CSV или TXT файла.
     
     Параметры:
     filename: путь к файлу
+    save_path: путь для сохранения графика (если None, не сохраняется)
     """
     # Проверка существования файла:
     if not os.path.exists(filename):
@@ -26,7 +29,7 @@ def visualize_file(filename):
     if filename.endswith('.txt'):
         # Для txt: разделитель - пробелы, пропускаем первую строку (заголовок), задаем имена колонок
         names_columns = ['X', 'Y', 'Wave', 'Intensity', 'cat', 'feature_1', 'feature_2', 'feature_3', 'side']
-        df = pd.read_csv(filename, delim_whitespace=True, skiprows=1, names=names_columns)
+        df = pd.read_csv(filename, sep=r'\s+', skiprows=1, names=names_columns)
     else:
         # Для csv: стандартное чтение
         df = pd.read_csv(filename)
@@ -77,11 +80,24 @@ def visualize_file(filename):
         axes[1, 1].grid(True, alpha=0.3, axis='y')
     
     plt.tight_layout()
-    plt.show()
+    
+    # Сохраняем график в файл вместо plt.show()
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"\nГрафик сохранен: {save_path}")
+    else:
+        # Автоматическое имя файла для сохранения
+        base_name = os.path.basename(filename).rsplit('.', 1)[0]
+        save_path = f'visualization_{base_name}.png'
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"\nГрафик сохранен: {save_path}")
+    
+    plt.close(fig)
     
     # Показываем статистику
     print("\nСтатистика:")
     print(df.describe())
+
 
 print('Пример:')
 visualize_file('./data/control/mk1/cortex_control_1group_633nm_center1500_obj100_power100_1s_5acc_map35x15_step2_place4_1.txt')

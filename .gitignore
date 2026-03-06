@@ -3,6 +3,9 @@ exo
 control
 temp_chunks
 
+# images
+*.png
+
 # Python-generated files
 __pycache__/
 *.py[oc]
