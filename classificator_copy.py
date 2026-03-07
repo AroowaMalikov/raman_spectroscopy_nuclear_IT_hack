@@ -4,13 +4,12 @@ import matplotlib.pyplot as plt
 import random
 
 
-def visualize_random_spectrum(filename, save_path=None):
+def visualize_random_spectrum(filename):
     """
     Визуализирует случайный спектр из файла.
     
     Параметры:
     filename: путь к файлу
-    save_path: путь для сохранения графика (если None, сохраняется автоматически)
     """
     # Проверка существования файла:
     if not os.path.exists(filename):
@@ -58,17 +57,7 @@ def visualize_random_spectrum(filename, save_path=None):
     plt.xlim(950, 2000)
     
     plt.tight_layout()
-    
-    # Сохранение
-    if save_path:
-        output_path = save_path
-    else:
-        base_name = os.path.basename(filename).rsplit('.', 1)[0]
-        output_path = f'random_spectrum_{base_name}.png'
-    
-    plt.savefig(output_path, dpi=150, bbox_inches='tight')
-    print(f"\nГрафик сохранён: {output_path}")
-    plt.close()
+    plt.show()  # Показываем график вместо сохранения
     
     # Статистика
     print(f"\nСтатистика интенсивности:")
@@ -77,73 +66,8 @@ def visualize_random_spectrum(filename, save_path=None):
     print(f"  Среднее: {spectrum_df['Intensity'].mean():.0f}")
 
 
-# ===== 10 ПОСЛЕДОВАТЕЛЬНЫХ ВЫЗОВОВ =====
-print('=' * 60)
-print('Генерация 10 случайных спектров')
-print('=' * 60)
-
-file_path = './data/exo/mexo1/cortex_exo_1group_633nm_center1500_obj100_power100_1s_5acc_map35x15_step2_place4_1.txt'
-
-# Вызов 1
-print(f"\n{'='*60}")
-print("ВЫЗОВ 1")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_1.png')
-
-# Вызов 2
-print(f"\n{'='*60}")
-print("ВЫЗОВ 2")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_2.png')
-
-# Вызов 3
-print(f"\n{'='*60}")
-print("ВЫЗОВ 3")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_3.png')
-
-# Вызов 4
-print(f"\n{'='*60}")
-print("ВЫЗОВ 4")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_4.png')
-
-# Вызов 5
-print(f"\n{'='*60}")
-print("ВЫЗОВ 5")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_5.png')
-
-# Вызов 6
-print(f"\n{'='*60}")
-print("ВЫЗОВ 6")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_6.png')
-
-# Вызов 7
-print(f"\n{'='*60}")
-print("ВЫЗОВ 7")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_7.png')
-
-# Вызов 8
-print(f"\n{'='*60}")
-print("ВЫЗОВ 8")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_8.png')
-
-# Вызов 9
-print(f"\n{'='*60}")
-print("ВЫЗОВ 9")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_9.png')
-
-# Вызов 10
-print(f"\n{'='*60}")
-print("ВЫЗОВ 10")
-print('='*60)
-visualize_random_spectrum(file_path, save_path='spectrum_10.png')
-
-print(f"\n{'='*60}")
-print("ГОТОВО! Создано 10 файлов: spectrum_1.png ... spectrum_10.png")
-print('='*60)
+# Пример: показать один случайный спектр
+print('Генерация случайного спектра...')
+visualize_random_spectrum(
+    './data/endo/mend1/cortex_endo_1group_633nm_center1500_obj100_power100_1s_5acc_map35x15_step2_place1_1.txt'
+)
